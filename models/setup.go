@@ -1,17 +1,17 @@
 package models
 
 import (
+	"example.com/tuto/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
 
-func ConnectDatabase() {
-
+func ConnectDatabase(config config.Config) {
 	database, err := gorm.Open(postgres.New(postgres.Config{
-		DSN:                  "host=localhost user=postgres password=example dbname=postgres port=5432 sslmode=disable TimeZone=Asia/Shanghai", // data source name, refer https://github.com/jackc/pgx
-		PreferSimpleProtocol: true,                                                                                                             // disables implicit prepared statement usage. By default pgx automatically uses the extended protocol
+		DSN:                  config.DbURL, // data source name, refer https://github.com/jackc/pgx
+		PreferSimpleProtocol: true,         // disables implicit prepared statement usage. By default pgx automatically uses the extended protocol
 	}), &gorm.Config{})
 
 	if err != nil {
