@@ -49,4 +49,5 @@ func TestGetAlbums(t *testing.T) {
 
 	// test redirection with trailing slash
 	// Create multiple root branch (without parent)
+	// Name and parent_id can be changed with Patch.
 }

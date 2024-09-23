@@ -69,7 +69,7 @@ func FindBranch(c *gin.Context) {
 // Update a branch
 func UpdateBranch(c *gin.Context) {
 	// Get model if exist
-	var branch models.Book
+	var branch models.Branch
 	if err := models.DB.Where("id = ?", c.Param("id")).First(&branch).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found!"})
 		return
@@ -85,4 +85,19 @@ func UpdateBranch(c *gin.Context) {
 	models.DB.Model(&branch).Updates(input)
 
 	c.JSON(http.StatusOK, gin.H{"data": branch})
+}
+
+// DELETE /branches/:id
+// Delete a branch
+func DeleteBranch(c *gin.Context) {
+	// Get model if exist
+	var branch models.Branch
+	if err := models.DB.Where("id = ?", c.Param("id")).First(&branch).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found!"})
+		return
+	}
+
+	models.DB.Delete(&branch)
+
+	c.Status(http.StatusNoContent)
 }
