@@ -2,14 +2,14 @@
 -- +goose StatementBegin
 CREATE TABLE branches (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL UNIQUE,
     parent_id INTEGER,
     FOREIGN KEY (parent_id) REFERENCES branches(id)
 );
 
 CREATE TABLE requirements (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL UNIQUE,
     details TEXT
 );
 
