@@ -2,7 +2,9 @@
 -- +goose StatementBegin
 CREATE TABLE branches (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
+    name VARCHAR(100) NOT NULL,
+    parent_id INTEGER,
+    FOREIGN KEY (parent_id) REFERENCES branches(id)
 );
 
 CREATE TABLE requirements (
@@ -29,7 +31,7 @@ CREATE TABLE branch_requirements (
 
 -- +goose Down
 -- +goose StatementBegin
+DROP TABLE branch_requirements;
 DROP TABLE branches;
 DROP TABLE requirements;
-DROP TABLE branch_requirements;
 -- +goose StatementEnd

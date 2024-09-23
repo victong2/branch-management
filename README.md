@@ -1,5 +1,7 @@
 # Enterprise Branch Management
 
+An enterprise branch management API designed to follow these [specifications](specifications.md)
+
 ## Getting Started
 
 ### DB
@@ -35,6 +37,12 @@ godotenv goose up
 ```
 go mod download
 go run .
+```
+
+I like to use [HTTPie](https://httpie.io/) CLI to interact with the API.
+
+```sh
+http http://localhost:5000/api/v1/branches
 ```
 
 ## Development
@@ -76,13 +84,7 @@ Create a migration with sequential number.
 godotenv goose -s create add_some_column sql
 ```
 
-How do I structure this project?
-Separate data layer, business, and configuration.
+## TODO
 
-Handlers/Controllers handle HTTP requests.
-Services contain business logic.
-Repositories/db interact with the database.
-Models define the structure of your data.
-Routes map the URLs to controller functions.
-Database connection is managed in a separate file.
-Middleware handles cross-cutting concerns like authentication.
+- Add DB constraint on the branch name and requirements name.
+- Add middleware to handle cross-cutting concerns like authentication.

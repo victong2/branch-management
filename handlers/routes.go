@@ -14,5 +14,8 @@ func SetupRoutes(router *gin.Engine) {
 		api.DELETE("/books/:id", DeleteBook)
 
 		api.GET("/branches", FindBranches)
+		api.POST("/branches", CreateBranch)
+		api.GET("/branches/:id", FindBranch)
+		api.PATCH("/branches/:id", UpdateBranch)
 	}
 }

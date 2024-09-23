@@ -46,4 +46,7 @@ func TestGetAlbums(t *testing.T) {
 	// Assert the response body contains expected data
 	// expectedBody := `[{"id":"1","title":"Blue Train","artist":"John Coltrane","price":56.99},{"id":"2","title":"Jeru","artist":"Gerry Mulligan","price":17.99}]`
 	// assert.JSONEq(t, expectedBody, recorder.Body.String())
+
+	// test redirection with trailing slash
+	// Create multiple root branch (without parent)
 }
