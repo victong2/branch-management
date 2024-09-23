@@ -25,19 +25,19 @@ func TestGetAlbums(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	router := gin.Default()
-	router.GET("/books", handlers.FindBooks)
+	router.GET("/branches", handlers.FindBranches)
 
-	req, _ := http.NewRequest(http.MethodGet, "/books", nil)
+	req, _ := http.NewRequest(http.MethodGet, "/branches", nil)
 	recorder := httptest.NewRecorder()
 	router.ServeHTTP(recorder, req)
 	assert.Equal(t, http.StatusOK, recorder.Code)
 
 	// Struct for the overall JSON response
-	type BookResponse struct {
-		Data []models.Book `json:"data"`
+	type BranchResponse struct {
+		Data []models.Branch `json:"data"`
 	}
 
-	var bookResponse BookResponse
+	var bookResponse BranchResponse
 	err = json.Unmarshal(recorder.Body.Bytes(), &bookResponse)
 	assert.Nil(t, err)
 
