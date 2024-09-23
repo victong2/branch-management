@@ -7,7 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"example.com/tuto/config"
-	"example.com/tuto/controllers"
+	"example.com/tuto/handlers"
+	"example.com/tuto/middlewares"
 	"example.com/tuto/models"
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
@@ -21,23 +22,13 @@ func main() {
 	models.ConnectDatabase(config)
 
 	router := gin.Default()
+	router.Use(middlewares.TrailingSlashMiddleware())
 
-	setupRoutes(router)
-
-	router.Run("localhost:5000")
-}
-
-func setupRoutes(router *gin.Engine) {
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": "hello world"})
 	})
 
-	api := router.Group("/api/v1")
-	{
-		api.GET("/books", controllers.FindBooks)
-		api.POST("/books", controllers.CreateBook)
-		api.GET("/books/:id", controllers.FindBook)
-		api.PATCH("/books/:id", controllers.UpdateBook)
-		api.DELETE("/books/:id", controllers.DeleteBook)
-	}
+	handlers.SetupRoutes(router)
+
+	router.Run("localhost:5000")
 }

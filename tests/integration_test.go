@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"example.com/tuto/config"
-	"example.com/tuto/controllers"
+	"example.com/tuto/handlers"
 	"example.com/tuto/models"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
@@ -25,7 +25,7 @@ func TestGetAlbums(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	router := gin.Default()
-	router.GET("/books", controllers.FindBooks)
+	router.GET("/books", handlers.FindBooks)
 
 	req, _ := http.NewRequest(http.MethodGet, "/books", nil)
 	recorder := httptest.NewRecorder()

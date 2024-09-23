@@ -54,10 +54,26 @@ Or vscode **Run and Debug** to use the debugger fonctionalities.
 
 At the moment, we use the local database for the integration tests. We might want to separate have separate test and dev databases.
 
+Start from a clean state:
+
+```sh
+# psql -h localhost -U postgres -d postgres -f scripts/drop_all_tables.sql
+godotenv goose down
+godotenv goose up
+```
+
 Run all tests in verbose mode.
 
 ```sh
 go test -v ./...
+```
+
+### Write migration
+
+Create a migration with sequential number.
+
+```sh
+godotenv goose -s create add_some_column sql
 ```
 
 How do I structure this project?

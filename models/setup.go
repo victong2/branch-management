@@ -18,10 +18,11 @@ func ConnectDatabase(config config.Config) {
 		panic("Failed to connect to database!")
 	}
 
-	err = database.AutoMigrate(&Book{})
-	if err != nil {
-		return
-	}
+	// Still debating whether to auto migrate.
+	// err = database.AutoMigrate(&Branch{}, &Requirement{}, &BranchRequirement{})
+	// if err != nil {
+	// 	return
+	// }
 
 	DB = database
 }
