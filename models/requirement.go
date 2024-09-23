@@ -7,3 +7,13 @@ type Requirement struct {
 	Details  string   `gorm:"type:text;" json:"details"`
 	Branches []Branch `gorm:"many2many:branch_requirements;" json:"branches"`
 }
+
+type CreateRequirementInput struct {
+	Name    string `json:"name" binding:"required"`
+	Details string `json:"details"`
+}
+
+type UpdateRequirementInput struct {
+	Name    string `json:"name"`
+	Details string `json:"details"`
+}
