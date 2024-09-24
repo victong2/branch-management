@@ -18,5 +18,8 @@ func SetupRoutes(router *gin.Engine) {
 		api.GET("/requirements/:id", FindRequirement)
 		api.PATCH("/requirements/:id", UpdateRequirement)
 		api.DELETE("/requirements/:id", DeleteRequirement)
+
+		api.POST("/branches/:id/requirements", AddRequirements)
+		api.PUT("/branches/:branchID/requirements", ReplaceRequirements)
 	}
 }

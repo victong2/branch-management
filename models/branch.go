@@ -7,12 +7,6 @@ type Branch struct {
 	Requirements []Requirement `gorm:"many2many:branch_requirements;" json:"requirements"`
 }
 
-// BranchRequirement (junction table)
-type BranchRequirement struct {
-	BranchID      uint `gorm:"primaryKey" json:"branch_id"`
-	RequirementID uint `gorm:"primaryKey" json:"requirement_id"`
-}
-
 type CreateBranchInput struct {
 	Name     string `json:"name" binding:"required"`
 	ParentID *uint  `json:"parent_id,omitempty"`

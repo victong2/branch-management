@@ -42,7 +42,19 @@ go run .
 I like to use [HTTPie](https://httpie.io/) CLI to interact with the API.
 
 ```sh
-http http://localhost:5000/api/v1/branches
+export API_URL=http://localhost:5000/api/v1
+
+http $API_URL/branches
+http POST $API_URL/branches name=Canada
+http POST $API_URL/branches name=Montreal parent_id:=1
+http PATCH $API_URL/branches/2 name=Montréal
+http GET $API_URL/branches/2
+http POST $API_URL/requirements name=anglais details=C1
+http POST $API_URL/requirements name=french details=C2
+http POST $API_URL/requirements name=spanish details=B2
+http POST $API_URL/branches/1/requirements requirements:='[1,2]'
+http PUT $API_URL/branches/1/requirements requirements:='[1]'
+http POST $API_URL/branches/2/requirements requirements:='[3]'
 ```
 
 ## Development
@@ -86,5 +98,5 @@ godotenv goose -s create add_some_column sql
 
 ## TODO
 
-- Add DB constraint on the branch name and requirements name.
+- Make children branches inherit requirements from parents.
 - Add middleware to handle cross-cutting concerns like authentication.
