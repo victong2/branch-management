@@ -1,10 +1,10 @@
 # Enterprise Branch Management
 
-An enterprise branch management API designed to follow these [specifications](specifications.md)
+An enterprise branch management API designed to follow these [specifications](specifications.md).
 
 ## Getting Started
 
-### DB
+### Database
 
 Start Postgres and Adminer containers. Connect to Adminer: http://localhost:8080/
 
@@ -14,13 +14,13 @@ docker-compose up -d
 
 #### Applying migrations
 
-Install the Goose migration tool.
+Install the [Goose](https://github.com/pressly/goose) migration tool.
 
 ```sh
 go install github.com/pressly/goose/v3/cmd/goose@latest
 ```
 
-Install godotenv to handle the environment variables in .env file.
+Install godotenv to handle the environment variables in [`.env`](.env) file.
 
 ```sh
  go install github.com/joho/godotenv/cmd/godotenv@latest
@@ -39,6 +39,8 @@ go mod download
 go run .
 ```
 
+### Interact with the API
+
 I like to use [HTTPie](https://httpie.io/) CLI to interact with the API.
 
 ```sh
@@ -49,12 +51,53 @@ http POST $API_URL/branches name=Canada
 http POST $API_URL/branches name=Montreal parent_id:=1
 http PATCH $API_URL/branches/2 name=Montréal
 http GET $API_URL/branches/2
-http POST $API_URL/requirements name=anglais details=C1
-http POST $API_URL/requirements name=french details=C2
-http POST $API_URL/requirements name=spanish details=B2
+http POST $API_URL/branches name=Merinio parent_id:=2
+http POST $API_URL/requirements name=english details=C1
+http POST $API_URL/requirements name=français details=C2
+http POST $API_URL/requirements name=español details=B2
+http POST $API_URL/requirements name=Golang details=Go
 http POST $API_URL/branches/1/requirements requirements:='[1,2]'
 http PUT $API_URL/branches/1/requirements requirements:='[1]'
-http POST $API_URL/branches/2/requirements requirements:='[3]'
+http POST $API_URL/branches/2/requirements requirements:='[2]'
+http POST $API_URL/branches/2/requirements requirements:='[2]'
+http POST $API_URL/branches/3/requirements requirements:='[3,4]'
+http GET $API_URL/branches/1/requirements
+http GET $API_URL/branches/2/requirements
+http GET $API_URL/branches/3/requirements
+```
+
+Last command returns:
+
+```json
+{
+  "data": {
+    "id": 3,
+    "name": "Merinio",
+    "parent_id": 2,
+    "requirements": [
+      {
+        "details": "B2",
+        "id": 3,
+        "name": "español"
+      },
+      {
+        "details": "Go",
+        "id": 4,
+        "name": "Golang"
+      },
+      {
+        "details": "C2",
+        "id": 2,
+        "name": "français"
+      },
+      {
+        "details": "C1",
+        "id": 1,
+        "name": "english"
+      }
+    ]
+  }
+}
 ```
 
 ## Development
@@ -88,7 +131,7 @@ Run all tests in verbose mode.
 go test -v ./...
 ```
 
-### Write migration
+### Write migrations
 
 Create a migration with sequential number.
 
@@ -96,7 +139,7 @@ Create a migration with sequential number.
 godotenv goose -s create add_some_column sql
 ```
 
-## TODO
+## Left TODO
 
-- Make children branches inherit requirements from parents.
-- Add middleware to handle cross-cutting concerns like authentication.
+- Make sure there is no non-cyclical hierarchy among branches. Enforce when creating branches.
+- Add [middlewares](middlewares) to handle concerns like authentication, authorization, etc.
