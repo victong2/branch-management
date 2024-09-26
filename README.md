@@ -141,5 +141,6 @@ godotenv goose -s create add_some_column sql
 
 ## Left TODO
 
+- Performance optimizations: perform a single query with recursive Common Table Expression (CTE) to get the requirements; caching to avoid calls to the DB; add query parameters to fetch multiple branches.
 - Make sure there is no non-cyclical hierarchy among branches. Enforce when creating branches.
 - Add [middlewares](middlewares) to handle concerns like authentication, authorization, etc.
